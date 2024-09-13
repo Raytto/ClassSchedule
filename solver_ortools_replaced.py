@@ -1275,7 +1275,7 @@ model.Minimize(
 
 import json
 load_course_var = {}
-with open('course_save_var_31499.json', 'r') as f:
+with open('course_save_var_22500.json', 'r') as f:
     load_course_var = json.load(f)
 
 for the_class in all_class_indexes:
@@ -1309,7 +1309,7 @@ class SolutionPrinter(cp_model.CpSolverSolutionCallback):
 
 solution_printer = SolutionPrinter()
 solver = cp_model.CpSolver()
-solver.parameters.max_time_in_seconds = 18000
+solver.parameters.max_time_in_seconds = 600
 status = solver.Solve(model,solution_printer)
 
 
@@ -1361,7 +1361,7 @@ print(map_class_subject_to_teacher[2, "英语"])
 # print(model.any_by_class_day_section_subject[1, 2, "morning", "数学"].value)
 
 
-# In[53]:
+# In[55]:
 
 
 # 班级信息x
@@ -1369,7 +1369,7 @@ the_class = 2
 for the_day in all_days_indexes:
     for the_index in all_course_indexes:
         for the_subject in all_subjects:
-            if model.course_vars[(the_class, the_day, the_index, the_subject)].value == 1:
+            if solver.Value(course_vars[(the_class, the_day, the_index, the_subject)]) == 1:
                 print(
                     f"the_class {the_class} the_day {the_day} the_index {the_index} the_subject {the_subject}"
                 )
@@ -1379,7 +1379,7 @@ for the_day in all_days_indexes:
 
 # ## 7.1 基本设置
 
-# In[54]:
+# In[56]:
 
 
 # 输出到 xlsx
@@ -1389,7 +1389,7 @@ import pandas as pd
 from openpyxl import load_workbook
 
 
-# In[55]:
+# In[57]:
 
 
 def copy_sheet(source_sheet, target_sheet):
@@ -1431,7 +1431,7 @@ def copy_sheet(source_sheet, target_sheet):
 
 # ## 7.2 输出班级课表
 
-# In[56]:
+# In[58]:
 
 
 # 输出班级表
@@ -1473,7 +1473,7 @@ workbook_class.save(f"result_class_{int(solver.ObjectiveValue())}.xlsx")
 
 # ## 7.3 输出老师课表
 
-# In[57]:
+# In[59]:
 
 
 # 输出老师表
@@ -1541,7 +1541,7 @@ workbook_teacher.remove(sample_sheet)
 workbook_teacher.save(f"result_teacher_{int(solver.ObjectiveValue())}.xlsx")
 
 
-# In[58]:
+# In[ ]:
 
 
 # jiaoyan_day_section = {
